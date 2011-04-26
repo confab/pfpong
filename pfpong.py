@@ -4,67 +4,27 @@
 import sys
 import pygame
 
-class Game(object):
-    """The main class for the game"""
-    
-    def __init__(self, left_paddle, right_paddle, ball):
-        self.left = left_paddle
-        self.right = right_paddle
-        self.ball = ball
-        self.width = 640
-        self.height = 480
-        self.size = self.width, self.height
-        self.speed = [1, 1]
-        self.black = 0, 0, 0
+width = 640
+height = 480
+size = width, height
+speed = [1, 2]
+black = 0, 0, 0
 
-    def make_screen(self, size):
-        self.screen = pygame.display.set_mode(size)
+screen = pygame.display.set_mode(size)
+ball = pygame.image.load('ball.gif')
+ballrect = ball.get_rect()
 
-    def play(self):
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-            self.move_ball = self.ball.move(self.speed)
-            self.screen.fill(self.black)
-#            self.screen.blit(self.ball.image(), self.move_ball)
-            pygame.display.flip()
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            sys.exit()
 
-class Paddle(object):
-    """Class for the paddles"""
-    
-    def __init__(self, image):
-        self.image = pygame.image.load(image)
-        self.paddle = self.image.get_rect()
+    ballrect = ballrect.move(speed)
+    if ballrect.left < 0 or ballrect.right > width:
+        speed[0] = -speed[0]
+    if ballrect.top < 0 or ballrect.bottom > height:
+        speed[1] = -speed[1]
 
-    def image(self):
-        return self.image
-
-    def paddle(self):
-        return self.paddle
-    
-
-class Ball(object):
-    """Class for the ball"""
-
-    def __init__(self, image):
-        self.image = pygame.image.load(image)
-        self.ball = self.image.get_rect()
-
-    def image(self):
-        return self.image
-
-    def ball(self):
-        return self.ball
-
-    def move(self, speed):
-        return self.ball.move(speed)
-
-if __name__=='__main__':
-    pygame.init()
-    ball = Ball('ball.gif')
-    left = Paddle('paddle.gif')
-    right = Paddle('paddle.gif')
-    game = Game(left, right, ball)
-    game.make_screen(game.size)
-    game.play()
+    screen.fill(black)
+    screen.blit(ball, ballrect)
+    pygame.display.flip()
