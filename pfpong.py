@@ -28,10 +28,13 @@ right = right.move(right_start)
 left_pos = [0, 0]
 right_pos = [0, 0]
 ball_hit = False
+left_score = 0
+right_score = 0
 
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            print 'left:\t{0}\nright:\t{1}'.format(left_score, right_score)
             sys.exit()
     if pygame.key.get_pressed()[pygame.K_w] and left.top > 0:
         left_pos[1] = -2
@@ -47,13 +50,17 @@ while True:
         right = right.move(right_pos)
 
     ball = ball.move(speed)
-    if ball.left < 0 or ball.right > width:
-        speed[0] = -speed[0]
+    if ball.left < 0:
+        right_score += 1
+        ball.center = (width - 80, 100)
+    if ball.right > width:
+        left_score += 1
+        ball.center = (80, 100)
     if ball.top < 0 or ball.bottom > height:
         speed[1] = -speed[1]
 
     if ball.colliderect(left) or ball.colliderect(right) and not ball_hit:
-        speed[0] = -speed[0]
+        speed[1] = -speed[1]
         ball_hit = not ball_hit
     elif ball_hit:
         ball_hit = not ball_hit
