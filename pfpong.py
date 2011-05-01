@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #   This is just a simple pong game to test using pygame
 #   I need to comment this like crazy!
+#   Needs to be completely refactored.
 
 import sys
 import pygame
@@ -12,6 +13,9 @@ height = 768
 size = width, height
 speed = [2, 2]
 black = 0, 0, 0
+white = 255, 255, 255
+
+pygame.init()
 
 screen = pygame.display.set_mode(size)
 ball_image = pygame.image.load('ball.gif')
@@ -35,6 +39,14 @@ ball_hit = False
 left_score = 0
 right_score = 0
 
+font = pygame.font.Font(None, 72)
+left_text = font.render(str(left_score), True, white, black)
+right_text = font.render(str(right_score), True, white, black)
+left_text_rect = left_text.get_rect()
+right_text_rect = right_text.get_rect()
+left_text_rect.center = [width / 4, 56]
+right_text_rect.center = [3 * width / 4, 56]
+
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -56,9 +68,11 @@ while True:
     ball = ball.move(speed)
     if ball.left < 0:
         right_score += 1
+        right_text = font.render(str(right_score), True, white, black)
         ball.center = (width - 80, 100)
     if ball.right > width:
         left_score += 1
+        left_text = font.render(str(left_score), True, white, black)
         ball.center = (80, 100)
     if ball.top < 0 or ball.bottom > height:
         speed[1] = -speed[1]
@@ -71,6 +85,8 @@ while True:
         speed[0] = -speed[0]
 
     screen.fill(black)
+    screen.blit(left_text, left_text_rect)
+    screen.blit(right_text, right_text_rect)
     screen.blit(net_image, net)
     screen.blit(ball_image, ball)
     screen.blit(paddle_image, left)
