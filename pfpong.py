@@ -10,7 +10,7 @@ width = 1366
 height = 768
 #height = 480
 size = width, height
-speed = [1, 1]
+speed = [2, 2]
 black = 0, 0, 0
 
 screen = pygame.display.set_mode(size)
@@ -19,8 +19,12 @@ ball = ball_image.get_rect()
 paddle_image = pygame.image.load('paddle.gif')
 left = paddle_image.get_rect()
 right = paddle_image.get_rect()
-#left.inflate(-2, -2)
-#right.inflate(-2, -2)
+left.inflate(2, 2)
+right.inflate(2, 2)
+net_image = pygame.image.load('net.gif')
+net = net_image.get_rect()
+net_pos = [width / 2 - 5, 0]
+net = net.move(net_pos)
 left_start = [40, height / 2 - 50]
 right_start = [width - 60, height / 2 - 50]
 left = left.move(left_start)
@@ -59,14 +63,17 @@ while True:
     if ball.top < 0 or ball.bottom > height:
         speed[1] = -speed[1]
 
-    if ball.colliderect(left) or ball.colliderect(right) and not ball_hit:
+    if ball.left < left.right - 3:
+        pass
+    elif ball.right > right.left + 3:
+        pass
+    elif ball.colliderect(left) or ball.colliderect(right):
         speed[0] = -speed[0]
-        ball_hit = not ball_hit
-    elif ball_hit:
-        ball_hit = not ball_hit
 
     screen.fill(black)
+    screen.blit(net_image, net)
     screen.blit(ball_image, ball)
     screen.blit(paddle_image, left)
     screen.blit(paddle_image, right)
     pygame.display.flip()
+
