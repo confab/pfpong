@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 #   This is just a simple pong game to test using pygame
-#   I need to comment this like crazy!
+#   TODO: Both paddles need to be able to move at the same time.
 #   Needs to be completely refactored.
+#   I need to comment this like crazy!
 
 import sys
 import pygame
