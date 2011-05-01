@@ -5,10 +5,10 @@
 import sys
 import pygame
 
-#width = 1366
-width = 640
-#height = 768
-height = 480
+width = 1366
+#width = 640
+height = 768
+#height = 480
 size = width, height
 speed = [1, 1]
 black = 0, 0, 0
@@ -19,8 +19,8 @@ ball = ball_image.get_rect()
 paddle_image = pygame.image.load('paddle.gif')
 left = paddle_image.get_rect()
 right = paddle_image.get_rect()
-left.inflate(-2, -2)
-right.inflate(-2, -2)
+#left.inflate(-2, -2)
+#right.inflate(-2, -2)
 left_start = [40, height / 2 - 50]
 right_start = [width - 60, height / 2 - 50]
 left = left.move(left_start)
@@ -60,7 +60,7 @@ while True:
         speed[1] = -speed[1]
 
     if ball.colliderect(left) or ball.colliderect(right) and not ball_hit:
-        speed[1] = -speed[1]
+        speed[0] = -speed[0]
         ball_hit = not ball_hit
     elif ball_hit:
         ball_hit = not ball_hit
