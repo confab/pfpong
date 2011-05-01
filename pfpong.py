@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-#   This is just a simple pong game to test using pygame
-#   TODO: Both paddles need to be able to move at the same time.
-#   Needs to be completely refactored.
-#   I need to comment this like crazy!
+# This is just a simple pong game to test using pygame
+# TODO: Needs to be completely refactored.
+# I need to comment this like crazy!
 
 import sys
 import pygame
@@ -51,7 +50,6 @@ right_text_rect.center = [3 * width / 4, 56]
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            print 'left:\t{0}\nright:\t{1}'.format(left_score, right_score)
             sys.exit()
     if pygame.key.get_pressed()[pygame.K_w] and left.top > 0:
         left_pos[1] = -2
@@ -59,7 +57,7 @@ while True:
     elif pygame.key.get_pressed()[pygame.K_s] and left.bottom < height:
         left_pos[1] = 2
         left = left.move(left_pos)
-    elif pygame.key.get_pressed()[pygame.K_UP] and right.top > 0:
+    if pygame.key.get_pressed()[pygame.K_UP] and right.top > 0:
         right_pos[1] = -2
         right = right.move(right_pos)
     elif pygame.key.get_pressed()[pygame.K_DOWN] and right.bottom < height:
